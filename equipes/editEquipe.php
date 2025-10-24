@@ -31,6 +31,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier une équipe</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
+            min-height: 100vh;
+        }
+        .main-card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 2rem 2.5rem;
+            margin-top: 2rem;
+            max-width: 500px;
+        }
+        .btn {
+            border-radius: 0.5rem;
+        }
+        h1 {
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+        .navbar {
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -46,22 +72,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li class="nav-item"><a class="nav-link" href="listeEquipe.php">Liste des équipes</a></li>
         <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
-        <li class="nav-item"><a class="nav-link" href="creationequipe.php">Ajouter une équipe</a></li>
+        <li class="nav-item"><a class="nav-link active" href="editEquipe.php?id=<?= $equipe['id'] ?>">Modifier une équipe</a></li>
       </ul>
     </div>
   </div>
 </nav>
-<div class="container mt-3">
-    <h1>Modifier une équipe</h1>
+<div class="container d-flex justify-content-center">
+  <div class="main-card w-100">
+    <h1 class="text-center text-primary">Modifier une équipe</h1>
     <?= $message ?>
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom de l'équipe</label>
             <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($equipe['nom']) ?>" required>
         </div>
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <a href="listeEquipe.php" class="btn btn-secondary">Retour</a>
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+          <a href="listeEquipe.php" class="btn btn-secondary ms-2">Retour</a>
+        </div>
     </form>
+  </div>
 </div>
 </body>
 </html>

@@ -10,6 +10,35 @@ $equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
     <title>Liste des équipes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
+            min-height: 100vh;
+        }
+        .main-card {
+            background: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 2rem 2.5rem;
+            margin-top: 2rem;
+        }
+        .table {
+            border-radius: 0.75rem;
+            overflow: hidden;
+        }
+        .btn {
+            border-radius: 0.5rem;
+        }
+        h1 {
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+        .navbar {
+            border-radius: 0 0 1rem 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -22,7 +51,7 @@ $equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="../heros/listeHero.php">Liste des héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
-        <li class="nav-item"><a class="nav-link" href="listeEquipe.php">Liste des équipes</a></li>
+        <li class="nav-item"><a class="nav-link active" href="listeEquipe.php">Liste des équipes</a></li>
         <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
         <li class="nav-item"><a class="nav-link" href="creationequipe.php">Ajouter une équipe</a></li>
@@ -30,9 +59,10 @@ $equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
     </div>
   </div>
 </nav>
-<div class="container mt-3">
-    <h1>Liste des équipes</h1>
-    <table id="table-equipes" class="table table-striped table-bordered">
+<div class="container d-flex justify-content-center">
+  <div class="main-card w-100">
+    <h1 class="text-center text-primary">Liste des équipes</h1>
+    <table id="table-equipes" class="table table-striped table-bordered shadow-sm">
         <thead class="table-dark">
             <tr>
                 <th>Nom</th>
@@ -44,14 +74,17 @@ $equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
             <tr>
                 <td><?= htmlspecialchars($equipe['nom']) ?></td>
                 <td>
-                    <a href="editEquipe.php?id=<?= $equipe['id'] ?>" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="editEquipe.php?id=<?= $equipe['id'] ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
                     <a href="deleteEquipe.php?id=<?= $equipe['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette équipe ?');">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
-    <a href="creationequipe.php" class="btn btn-primary">Ajouter une équipe</a>
+    <div class="d-flex justify-content-end mt-3">
+      <a href="creationequipe.php" class="btn btn-primary">Ajouter une équipe</a>
+    </div>
+  </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
