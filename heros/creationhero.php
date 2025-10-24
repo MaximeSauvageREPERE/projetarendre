@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Création d'un objet Hero
         $hero = new Hero($nom, $prenom, $alias, $pouvoir_id, $equipe_id);
         // Insertion en base
-        $sql = 'INSERT INTO heros (nom, prenom, alias, pouvoir_id, equipe_id) VALUES (?, ?, ?, ?, ?)';
+        $sql = 'INSERT INTO hero (nom, prenom, alias, pouvoir_id, equipe_id) VALUES (?, ?, ?, ?, ?)';
         $stmt = $pdo->prepare($sql);
         try {
             $stmt->execute([$hero->nom, $hero->prenom, $hero->alias, $hero->pouvoir_id, $hero->equipe_id]);

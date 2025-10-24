@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Hero.php';
 
 // Récupérer tous les héros avec leurs pouvoirs et équipes associés
-$sql = 'SELECT h.*, p.nom AS pouvoir_nom, e.nom AS equipe_nom FROM heros h
+$sql = 'SELECT h.*, p.nom AS pouvoir_nom, e.nom AS equipe_nom FROM hero h
         LEFT JOIN pouvoir p ON h.pouvoir_id = p.id
         LEFT JOIN equipe e ON h.equipe_id = e.id';
 $rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);

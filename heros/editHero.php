@@ -14,7 +14,7 @@ if (!$id) {
 $pouvoirs = $pdo->query('SELECT id, nom FROM pouvoir')->fetchAll();
 $equipes = $pdo->query('SELECT id, nom FROM equipe')->fetchAll();
 // Récupérer le héros à modifier
-$stmt = $pdo->prepare('SELECT * FROM heros WHERE id = ?');
+$stmt = $pdo->prepare('SELECT * FROM hero WHERE id = ?');
 $stmt->execute([$id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$row) {
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $hero->pouvoir_id = $pouvoir_id;
         $hero->equipe_id = $equipe_id;
         // Mise à jour en base
-        $sql = 'UPDATE heros SET nom=?, prenom=?, alias=?, pouvoir_id=?, equipe_id=? WHERE id=?';
+        $sql = 'UPDATE hero SET nom=?, prenom=?, alias=?, pouvoir_id=?, equipe_id=? WHERE id=?';
         $stmt = $pdo->prepare($sql);
         try {
             $stmt->execute([$hero->nom, $hero->prenom, $hero->alias, $hero->pouvoir_id, $hero->equipe_id, $hero->id]);
             $message = '<div class="alert alert-success">Héros modifié avec succès !</div>';
             // Rafraîchir les données de l'objet
-            $stmt = $pdo->prepare('SELECT * FROM heros WHERE id = ?');
+            $stmt = $pdo->prepare('SELECT * FROM hero WHERE id = ?');
             $stmt->execute([$hero->id]);
             $hero = Hero::fromArray($stmt->fetch(PDO::FETCH_ASSOC));
         } catch (PDOException $e) {

@@ -11,7 +11,7 @@ if (!$id) {
     exit;
 }
 // Préparation de la requête de suppression
-$sql = 'DELETE FROM heros WHERE id = ?';
+$sql = 'DELETE FROM hero WHERE id = ?';
 $stmt = $pdo->prepare($sql);
 try {
     // Exécution de la suppression
