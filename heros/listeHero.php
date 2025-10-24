@@ -17,6 +17,7 @@ $heros = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des héros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
@@ -39,7 +40,7 @@ $heros = $stmt->fetchAll();
 </nav>
 <div class="container mt-3">
     <h1>Liste des super héros</h1>
-    <table class="table table-striped table-bordered">
+    <table id="table-heros" class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
                 <th>Nom</th>
@@ -68,5 +69,17 @@ $heros = $stmt->fetchAll();
     </table>
     <a href="creationhero.php" class="btn btn-primary">Ajouter un héros</a>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#table-heros').DataTable({
+        language: {
+            url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json"
+        }
+    });
+});
+</script>
 </body>
 </html>
