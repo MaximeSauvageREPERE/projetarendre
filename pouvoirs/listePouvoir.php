@@ -1,11 +1,15 @@
 <?php
+// Connexion à la base de données et inclusion du modèle Pouvoir
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Pouvoir.php';
-$stmt = $pdo->query('SELECT * FROM pouvoir ORDER BY nom');
-$pouvoirs = [];
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $pouvoirs[] = Pouvoir::fromArray($row);
-}
+
+// Récupérer tous les pouvoirs
+$sql = 'SELECT * FROM pouvoir';
+$rows = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+// Transformation des résultats en objets Pouvoir
+$pouvoirs = array_map(function($row) {
+    return Pouvoir::fromArray($row);
+}, $rows);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -14,7 +18,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des pouvoirs</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <style>
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
@@ -26,10 +30,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             box-shadow: 0 4px 24px rgba(0,0,0,0.08);
             padding: 2rem 2.5rem;
             margin-top: 2rem;
-        }
-        .table {
-            border-radius: 0.75rem;
-            overflow: hidden;
+            max-width: 800px;
         }
         .btn {
             border-radius: 0.5rem;
@@ -46,6 +47,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     </style>
 </head>
 <body>
+<!-- Barre de navigation Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Super Héros</a>
@@ -64,44 +66,47 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     </div>
   </div>
 </nav>
+<!-- Carte centrale contenant la table -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Liste des pouvoirs</h1>
-    <table id="table-pouvoirs" class="table table-striped table-bordered shadow-sm">
-        <thead class="table-dark">
-            <tr>
-                <th>Nom</th>
-                <th>Actions</th>
-            </tr>
+    <div class="table-responsive">
+      <table id="pouvoirsTable" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
-        <?php foreach ($pouvoirs as $pouvoir): ?>
+          <?php foreach ($pouvoirs as $pouvoir): ?>
             <tr>
-                <td><?= htmlspecialchars($pouvoir->nom) ?></td>
-                <td>
-                    <a href="editPouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
-                    <a href="deletePouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pouvoir ?');">Supprimer</a>
-                </td>
+              <td><?= $pouvoir->id ?></td>
+              <td><?= htmlspecialchars($pouvoir->nom) ?></td>
+              <td>
+                <a href="editPouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="deletePouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce pouvoir ?');">Supprimer</a>
+              </td>
             </tr>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
         </tbody>
-    </table>
-    <div class="d-flex justify-content-end mt-3">
-      <a href="creationpouvoir.php" class="btn btn-primary">Ajouter un pouvoir</a>
+      </table>
     </div>
   </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#table-pouvoirs').DataTable({
-        language: {
-            url: "//cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json"
-        }
+  // Initialisation de DataTables
+  $(document).ready(function() {
+    $('#pouvoirsTable').DataTable({
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+      }
     });
-});
+  });
 </script>
 </body>
 </html>

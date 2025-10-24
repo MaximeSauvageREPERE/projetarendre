@@ -1,15 +1,28 @@
 <?php
+// Connexion à la base de données et inclusion du modèle Hero
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Hero.php';
 
+// Récupérer l'ID du héros à supprimer
 $id = $_GET['id'] ?? null;
-if ($id) {
-    $stmt = $pdo->prepare('DELETE FROM heros WHERE id = ?');
-    $stmt->execute([$id]);
+if (!$id) {
+    // Redirection si l'ID n'est pas fourni
+    header('Location: listeHero.php');
+    exit;
 }
+// Préparation de la requête de suppression
+$sql = 'DELETE FROM heros WHERE id = ?';
+$stmt = $pdo->prepare($sql);
+try {
+    // Exécution de la suppression
+    $stmt->execute([$id]);
+    // Message de succès (optionnel, ici redirection directe)
+} catch (PDOException $e) {
+    // Gestion de l'erreur (optionnel, ici redirection directe)
+}
+// Redirection vers la liste après suppression
 header('Location: listeHero.php');
 exit;
-
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">

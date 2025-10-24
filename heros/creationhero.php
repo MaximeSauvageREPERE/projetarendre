@@ -1,18 +1,24 @@
 <?php
-
+// Connexion à la base de données et inclusion du modèle Hero
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Hero.php';
 
+// Message d'information
 $message = '';
+// Traitement du formulaire d'ajout de héros
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des champs du formulaire
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
     $alias = $_POST['alias'] ?? '';
     $pouvoir_id = $_POST['pouvoir_id'] ?? '';
     $equipe_id = $_POST['equipe_id'] ?? '';
 
+    // Vérification des champs obligatoires
     if ($nom && $prenom && $alias && $pouvoir_id && $equipe_id) {
+        // Création d'un objet Hero
         $hero = new Hero($nom, $prenom, $alias, $pouvoir_id, $equipe_id);
+        // Insertion en base
         $sql = 'INSERT INTO heros (nom, prenom, alias, pouvoir_id, equipe_id) VALUES (?, ?, ?, ?, ?)';
         $stmt = $pdo->prepare($sql);
         try {
@@ -25,12 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = '<div class="alert alert-warning">Veuillez remplir tous les champs.</div>';
     }
 }
-
-// Récupérer les pouvoirs
+// Récupération des pouvoirs
 $stmt = $pdo->query('SELECT id, nom FROM pouvoir');
 $pouvoirs = $stmt->fetchAll();
-
-// Récupérer les équipes
+// Récupération des équipes
 $stmt = $pdo->query('SELECT id, nom FROM equipe');
 $equipes = $stmt->fetchAll();
 ?>
@@ -69,6 +73,7 @@ $equipes = $stmt->fetchAll();
     </style>
 </head>
 <body>
+<!-- Barre de navigation Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Super Héros</a>
@@ -87,10 +92,13 @@ $equipes = $stmt->fetchAll();
     </div>
   </div>
 </nav>
+<!-- Carte centrale contenant le formulaire -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Créer un super héros</h1>
+    <!-- Affichage du message d'information -->
     <?= $message ?>
+    <!-- Formulaire d'ajout de héros -->
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom</label>

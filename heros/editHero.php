@@ -1,48 +1,53 @@
 <?php
-
+// Connexion à la base de données et inclusion du modèle Hero
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Hero.php';
 
-// Récupérer l'ID du héros
+// Récupérer l'ID du héros à modifier
 $id = $_GET['id'] ?? null;
 if (!$id) {
+    // Redirection si l'ID n'est pas fourni
     header('Location: listeHero.php');
     exit;
 }
-
-// Récupérer les pouvoirs et équipes
+// Récupérer les pouvoirs et équipes pour les listes déroulantes
 $pouvoirs = $pdo->query('SELECT id, nom FROM pouvoir')->fetchAll();
 $equipes = $pdo->query('SELECT id, nom FROM equipe')->fetchAll();
-
-// Récupérer le héros
+// Récupérer le héros à modifier
 $stmt = $pdo->prepare('SELECT * FROM heros WHERE id = ?');
 $stmt->execute([$id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$row) {
+    // Redirection si le héros n'existe pas
     header('Location: listeHero.php');
     exit;
 }
 $hero = Hero::fromArray($row);
 
+// Message d'information
 $message = '';
+// Traitement du formulaire de modification
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération des champs du formulaire
     $nom = $_POST['nom'] ?? '';
     $prenom = $_POST['prenom'] ?? '';
     $alias = $_POST['alias'] ?? '';
     $pouvoir_id = $_POST['pouvoir_id'] ?? '';
     $equipe_id = $_POST['equipe_id'] ?? '';
     if ($nom && $prenom && $alias && $pouvoir_id && $equipe_id) {
+        // Mise à jour de l'objet Hero
         $hero->nom = $nom;
         $hero->prenom = $prenom;
         $hero->alias = $alias;
         $hero->pouvoir_id = $pouvoir_id;
         $hero->equipe_id = $equipe_id;
+        // Mise à jour en base
         $sql = 'UPDATE heros SET nom=?, prenom=?, alias=?, pouvoir_id=?, equipe_id=? WHERE id=?';
         $stmt = $pdo->prepare($sql);
         try {
             $stmt->execute([$hero->nom, $hero->prenom, $hero->alias, $hero->pouvoir_id, $hero->equipe_id, $hero->id]);
             $message = '<div class="alert alert-success">Héros modifié avec succès !</div>';
-            // Rafraîchir les données
+            // Rafraîchir les données de l'objet
             $stmt = $pdo->prepare('SELECT * FROM heros WHERE id = ?');
             $stmt->execute([$hero->id]);
             $hero = Hero::fromArray($stmt->fetch(PDO::FETCH_ASSOC));
@@ -89,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<!-- Barre de navigation Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Super Héros</a>
@@ -100,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li class="nav-item"><a class="nav-link" href="listeHero.php">Liste des héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
         <li class="nav-item"><a class="nav-link" href="../equipes/listeEquipe.php">Liste des équipes</a></li>
-        <li class="nav-item"><a class="nav-link active" href="editHero.php?id=<?= $hero['id'] ?>">Modifier un héros</a></li>
+        <li class="nav-item"><a class="nav-link active" href="editHero.php?id=<?= $hero->id ?>">Modifier un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="creationhero.php">Ajouter un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
         <li class="nav-item"><a class="nav-link" href="../equipes/creationequipe.php">Ajouter une équipe</a></li>
@@ -108,10 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 </nav>
+<!-- Carte centrale contenant le formulaire -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Modifier un super héros</h1>
+    <!-- Affichage du message d'information -->
     <?= $message ?>
+    <!-- Formulaire de modification de héros -->
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom</label>

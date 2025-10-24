@@ -1,22 +1,30 @@
 <?php
-
+// Connexion à la base de données et inclusion du modèle Equipe
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Equipe.php';
 
+// Initialisation du message d'information
 $message = '';
+// Traitement du formulaire d'ajout d'équipe
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Récupération et nettoyage du nom saisi
   $nom = trim($_POST['nom'] ?? '');
   if ($nom) {
+    // Création d'un objet Equipe
     $equipe = new Equipe($nom);
+    // Préparation et exécution de la requête d'insertion
     $sql = 'INSERT INTO equipe (nom) VALUES (?)';
     $stmt = $pdo->prepare($sql);
     try {
       $stmt->execute([$equipe->nom]);
+      // Message de succès
       $message = '<div class="alert alert-success">Équipe ajoutée avec succès !</div>';
     } catch (PDOException $e) {
+      // Message d'erreur SQL
       $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
   } else {
+    // Message si le champ est vide
     $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
   }
 }
@@ -56,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<!-- Barre de navigation Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Super Héros</a>
@@ -74,10 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
   </div>
 </nav>
+<!-- Carte centrale contenant le formulaire -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Ajouter une équipe</h1>
+    <!-- Affichage du message d'information -->
     <?= $message ?>
+    <!-- Formulaire d'ajout d'équipe -->
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom de l'équipe</label>

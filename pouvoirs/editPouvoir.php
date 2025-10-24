@@ -1,29 +1,46 @@
 <?php
+// Connexion à la base de données et inclusion du modèle Pouvoir
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../models/Pouvoir.php';
+
+// Récupérer l'ID du pouvoir à modifier
 $id = $_GET['id'] ?? null;
-if (!$id) { header('Location: listePouvoir.php'); exit; }
+if (!$id) {
+    // Redirection si l'ID n'est pas fourni
+    header('Location: listePouvoir.php');
+    exit;
+}
+// Récupérer le pouvoir à modifier
 $stmt = $pdo->prepare('SELECT * FROM pouvoir WHERE id = ?');
 $stmt->execute([$id]);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-if (!$row) { header('Location: listePouvoir.php'); exit; }
+if (!$row) {
+    // Redirection si le pouvoir n'existe pas
+    header('Location: listePouvoir.php');
+    exit;
+}
 $pouvoir = Pouvoir::fromArray($row);
+// Message d'information
 $message = '';
+// Traitement du formulaire de modification
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $nom = trim($_POST['nom'] ?? '');
-  if ($nom) {
-    $pouvoir->nom = $nom;
-    $sql = 'UPDATE pouvoir SET nom=? WHERE id=?';
-    $stmt = $pdo->prepare($sql);
-    try {
-      $stmt->execute([$pouvoir->nom, $pouvoir->id]);
-      $message = '<div class="alert alert-success">Pouvoir modifié avec succès !</div>';
-    } catch (PDOException $e) {
-      $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
+    // Récupération et nettoyage du nom saisi
+    $nom = trim($_POST['nom'] ?? '');
+    if ($nom) {
+        // Mise à jour de l'objet Pouvoir
+        $pouvoir->nom = $nom;
+        // Mise à jour en base
+        $sql = 'UPDATE pouvoir SET nom=? WHERE id=?';
+        $stmt = $pdo->prepare($sql);
+        try {
+            $stmt->execute([$pouvoir->nom, $pouvoir->id]);
+            $message = '<div class="alert alert-success">Pouvoir modifié avec succès !</div>';
+        } catch (PDOException $e) {
+            $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
+        }
+    } else {
+        $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
     }
-  } else {
-    $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
-  }
 }
 ?>
 <!DOCTYPE html>
@@ -61,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
+<!-- Barre de navigation Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Super Héros</a>
@@ -74,15 +92,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li class="nav-item"><a class="nav-link" href="../equipes/listeEquipe.php">Liste des équipes</a></li>
         <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="creationpouvoir.php">Ajouter un pouvoir</a></li>
-        <li class="nav-item"><a class="nav-link active" href="editPouvoir.php?id=<?= $pouvoir['id'] ?>">Modifier un pouvoir</a></li>
+        <li class="nav-item"><a class="nav-link active" href="editPouvoir.php?id=<?= $pouvoir->id ?>">Modifier un pouvoir</a></li>
       </ul>
     </div>
   </div>
 </nav>
+<!-- Carte centrale contenant le formulaire -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Modifier un pouvoir</h1>
+    <!-- Affichage du message d'information -->
     <?= $message ?>
+    <!-- Formulaire de modification de pouvoir -->
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom du pouvoir</label>
