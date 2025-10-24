@@ -74,7 +74,7 @@ $pouvoirs = array_map(function($row) {
 <!-- Carte centrale contenant la table -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
-    <h1 class="text-center text-primary">Liste des pouvoirs</h1>
+    <h1 class="text-center text-secondary">Liste des pouvoirs</h1>
     <div class="table-responsive">
       <table id="pouvoirsTable" class="table table-striped table-bordered">
         <thead>

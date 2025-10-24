@@ -95,7 +95,7 @@ $equipes = $stmt->fetchAll();
 <!-- Carte centrale contenant le formulaire -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
-    <h1 class="text-center text-primary">Créer un super héros</h1>
+    <h1 class="text-center text-secondary">Créer un super héros</h1>
     <!-- Affichage du message d'information -->
     <?= $message ?>
     <!-- Formulaire d'ajout de héros -->

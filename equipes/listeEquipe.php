@@ -74,7 +74,7 @@ $equipes = array_map(function($row) {
 <!-- Carte centrale contenant la table -->
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
-    <h1 class="text-center text-primary">Liste des équipes</h1>
+    <h1 class="text-center text-secondary">Liste des équipes</h1>
     <!-- Boutons d'export à gauche et bouton Ajouter une équipe à droite -->
     <div class="d-flex justify-content-between align-items-center mt-3">
       <div id="exportButtons"></div>
