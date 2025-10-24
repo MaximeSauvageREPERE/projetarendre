@@ -20,9 +20,10 @@ $heros = array_map(function($row) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des héros</title>
     <!-- Inclusion de Bootstrap et DataTables -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
     <style>
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
@@ -79,7 +80,7 @@ $heros = array_map(function($row) {
   <div class="main-card w-100">
     <h1 class="text-center text-secondary">Liste des super héros</h1>
     <div class="table-responsive">
-      <table id="herosTable" class="table table-striped table-bordered">
+      <table id="herosTable" class="table table-striped table-bordered nowrap" style="width:100%">
         <thead>
           <tr>
             <th>ID</th>
@@ -130,10 +131,13 @@ $heros = array_map(function($row) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
 <script>
   // Initialisation de DataTables avec boutons d'export et traduction française
   $(document).ready(function() {
     $('#herosTable').DataTable({
+      responsive: true,
       language: {
         search: "Recherche :",
         lengthMenu: "Afficher _MENU_ entrées",
@@ -150,9 +154,9 @@ $heros = array_map(function($row) {
       },
       dom: '<"d-flex justify-content-between align-items-center mt-3"Bf>rtip',
       buttons: [
-  { extend: 'csv', text: 'Exporter CSV', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
-  { extend: 'excel', text: 'Exporter Excel', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
-  { extend: 'pdf', text: 'Exporter PDF', className: 'btn btn-primary rounded', exportOptions: { columns: ':not(:last-child)' } }
+        { extend: 'csv', text: 'Exporter CSV', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
+        { extend: 'excel', text: 'Exporter Excel', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
+        { extend: 'pdf', text: 'Exporter PDF', className: 'btn btn-primary rounded', exportOptions: { columns: ':not(:last-child)' } }
       ]
     });
   });
