@@ -140,9 +140,9 @@ $equipes = array_map(function($row) {
       },
       dom: '<"d-flex justify-content-between align-items-center mt-3"Bf>rtip',
       buttons: [
-        { extend: 'csv', text: 'Exporter CSV', className: 'btn btn-primary me-2 rounded' },
-        { extend: 'excel', text: 'Exporter Excel', className: 'btn btn-primary me-2 rounded' },
-        { extend: 'pdf', text: 'Exporter PDF', className: 'btn btn-primary rounded' }
+  { extend: 'csv', text: 'Exporter CSV', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
+  { extend: 'excel', text: 'Exporter Excel', className: 'btn btn-primary me-2 rounded', exportOptions: { columns: ':not(:last-child)' } },
+  { extend: 'pdf', text: 'Exporter PDF', className: 'btn btn-primary rounded', exportOptions: { columns: ':not(:last-child)' } }
       ]
     });
   });
