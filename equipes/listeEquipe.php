@@ -19,6 +19,7 @@ $equipes = array_map(function($row) {
     <title>Liste des équipes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
     <style>
         body {
             background: linear-gradient(135deg, #f8fafc 0%, #e2eafc 100%);
@@ -74,6 +75,10 @@ $equipes = array_map(function($row) {
 <div class="container d-flex justify-content-center">
   <div class="main-card w-100">
     <h1 class="text-center text-primary">Liste des équipes</h1>
+    <!-- Boutons d'export à gauche et bouton Ajouter une équipe à droite -->
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div id="exportButtons"></div>
+    </div>
     <div class="table-responsive">
       <table id="equipesTable" class="table table-striped table-bordered">
         <thead>
@@ -97,11 +102,24 @@ $equipes = array_map(function($row) {
         </tbody>
       </table>
     </div>
+    <!-- Bouton Ajouter une équipe sous la pagination -->
+    <div class="d-flex justify-content-end mt-3">
+      <a href="creationequipe.php" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Ajouter une équipe
+      </a>
+    </div>
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script>
   // Initialisation de DataTables
   $(document).ready(function() {
@@ -119,7 +137,13 @@ $equipes = array_map(function($row) {
           next: "Suivant",
           previous: "Précédent"
         }
-      }
+      },
+      dom: '<"d-flex justify-content-between align-items-center mt-3"Bf>rtip',
+      buttons: [
+        { extend: 'csv', text: 'Exporter CSV', className: 'btn btn-primary me-2 rounded' },
+        { extend: 'excel', text: 'Exporter Excel', className: 'btn btn-primary me-2 rounded' },
+        { extend: 'pdf', text: 'Exporter PDF', className: 'btn btn-primary rounded' }
+      ]
     });
   });
 </script>
