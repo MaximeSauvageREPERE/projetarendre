@@ -46,6 +46,10 @@ $heros = array_map(function($row) {
             border-radius: 0 0 1rem 1rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         }
+        thead th {
+            background-color: #212529 !important;
+            color: #fff !important;
+        }
     </style>
 </head>
 <body>
@@ -119,7 +123,18 @@ $heros = array_map(function($row) {
   $(document).ready(function() {
     $('#herosTable').DataTable({
       language: {
-        url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json'
+        search: "Recherche :",
+        lengthMenu: "Afficher _MENU_ entrées",
+        info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+        infoEmpty: "Aucune entrée à afficher",
+        infoFiltered: "(filtré de _MAX_ entrées au total)",
+        zeroRecords: "Aucun résultat trouvé",
+        paginate: {
+          first: "Premier",
+          last: "Dernier",
+          next: "Suivant",
+          previous: "Précédent"
+        }
       }
     });
   });
