@@ -85,7 +85,7 @@ $equipes = array_map(function($row) {
               <td><?= $equipe->id ?></td>
               <td><?= htmlspecialchars($equipe->nom) ?></td>
               <td>
-                <a href="editEquipe.php?id=<?= $equipe->id ?>" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="editEquipe.php?id=<?= $equipe->id ?>" class="btn btn-sm btn-warning">Modifier</a>
                 <a href="deleteEquipe.php?id=<?= $equipe->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer cette équipe ?');">Supprimer</a>
               </td>
             </tr>

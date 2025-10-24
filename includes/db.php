@@ -1,7 +1,7 @@
 <?php
 // Paramètres de connexion à la base de données
 $host = 'localhost'; // Adresse du serveur MySQL
-$db   = 'nom_de_la_base'; // Nom de la base de données à adapter
+$db   = 'projetarendre'; // Nom de la base de données à adapter
 $user = 'root'; // Nom d'utilisateur MySQL
 $pass = ''; // Mot de passe MySQL
 $charset = 'utf8mb4'; // Encodage des caractères

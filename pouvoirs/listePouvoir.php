@@ -85,7 +85,7 @@ $pouvoirs = array_map(function($row) {
               <td><?= $pouvoir->id ?></td>
               <td><?= htmlspecialchars($pouvoir->nom) ?></td>
               <td>
-                <a href="editPouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="editPouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-sm btn-warning">Modifier</a>
                 <a href="deletePouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce pouvoir ?');">Supprimer</a>
               </td>
             </tr>

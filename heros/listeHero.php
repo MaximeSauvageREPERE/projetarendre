@@ -95,7 +95,7 @@ $heros = array_map(function($row) {
               <td><?= htmlspecialchars($hero->pouvoir_nom ?? '') ?></td>
               <td><?= htmlspecialchars($hero->equipe_nom ?? '') ?></td>
               <td>
-                <a href="editHero.php?id=<?= $hero->id ?>" class="btn btn-sm btn-primary">Modifier</a>
+                <a href="editHero.php?id=<?= $hero->id ?>" class="btn btn-sm btn-warning">Modifier</a>
                 <a href="deleteHero.php?id=<?= $hero->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce héros ?');">Supprimer</a>
               </td>
             </tr>
