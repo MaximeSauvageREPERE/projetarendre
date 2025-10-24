@@ -19,6 +19,7 @@ $heros = array_map(function($row) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des héros</title>
+    <!-- Inclusion de Bootstrap et DataTables -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
@@ -100,6 +101,7 @@ $heros = array_map(function($row) {
               <td><?= htmlspecialchars($hero->pouvoir_nom ?? '') ?></td>
               <td><?= htmlspecialchars($hero->equipe_nom ?? '') ?></td>
               <td>
+                <!-- Boutons d'action pour chaque héros -->
                 <a href="editHero.php?id=<?= $hero->id ?>" class="btn btn-sm btn-warning">Modifier</a>
                 <a href="deleteHero.php?id=<?= $hero->id ?>" class="btn btn-sm btn-danger" onclick="return confirm('Supprimer ce héros ?');">Supprimer</a>
               </td>
@@ -117,6 +119,7 @@ $heros = array_map(function($row) {
     </div>
   </div>
 </div>
+<!-- Inclusion des scripts JS nécessaires -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -128,7 +131,7 @@ $heros = array_map(function($row) {
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 <script>
-  // Initialisation de DataTables
+  // Initialisation de DataTables avec boutons d'export et traduction française
   $(document).ready(function() {
     $('#herosTable').DataTable({
       language: {
