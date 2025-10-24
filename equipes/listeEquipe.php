@@ -63,9 +63,9 @@ $equipes = array_map(function($row) {
         <li class="nav-item"><a class="nav-link" href="../heros/listeHero.php">Liste des héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
         <li class="nav-item"><a class="nav-link active" href="listeEquipe.php">Liste des équipes</a></li>
-        <li class="nav-item"><a class="nav-link" href="creationequipe.php">Ajouter une équipe</a></li>
-        <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
-        <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
+  <li class="nav-item"><a class="nav-link" href="creationEquipe.php">Ajouter une équipe</a></li>
+  <li class="nav-item"><a class="nav-link" href="../heros/creationHero.php">Ajouter un héros</a></li>
+  <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationPouvoir.php">Ajouter un pouvoir</a></li>
       </ul>
     </div>
   </div>
@@ -103,7 +103,7 @@ $equipes = array_map(function($row) {
     </div>
     <!-- Bouton Ajouter une équipe sous la pagination -->
     <div class="d-flex justify-content-end mt-3">
-      <a href="creationequipe.php" class="btn btn-success">
+  <a href="creationEquipe.php" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> Ajouter une équipe
       </a>
     </div>

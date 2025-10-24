@@ -75,9 +75,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <li class="nav-item"><a class="nav-link" href="../heros/listeHero.php">Liste des héros</a></li>
         <li class="nav-item"><a class="nav-link" href="listePouvoir.php">Liste des pouvoirs</a></li>
         <li class="nav-item"><a class="nav-link" href="../equipes/listeEquipe.php">Liste des équipes</a></li>
-        <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
-        <li class="nav-item"><a class="nav-link active" href="creationpouvoir.php">Ajouter un pouvoir</a></li>
-        <li class="nav-item"><a class="nav-link" href="../equipes/creationequipe.php">Ajouter une équipe</a></li>
+        <li class="nav-item"><a class="nav-link" href="../heros/creationHero.php">Ajouter un héros</a></li>
+        <li class="nav-item"><a class="nav-link active" href="creationPouvoir.php">Ajouter un pouvoir</a></li>
+        <li class="nav-item"><a class="nav-link" href="../equipes/creationEquipe.php">Ajouter une équipe</a></li>
       </ul>
     </div>
   </div>

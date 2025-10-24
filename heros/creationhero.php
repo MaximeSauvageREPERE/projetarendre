@@ -84,9 +84,9 @@ $equipes = $stmt->fetchAll();
                 <li class="nav-item"><a class="nav-link" href="listeHero.php">Liste des héros</a></li>
                 <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
                 <li class="nav-item"><a class="nav-link" href="../equipes/listeEquipe.php">Liste des équipes</a></li>
-                <li class="nav-item"><a class="nav-link active" href="creationhero.php">Ajouter un héros</a></li>
-                <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
-                <li class="nav-item"><a class="nav-link" href="../equipes/creationequipe.php">Ajouter une équipe</a></li>
+                <li class="nav-item"><a class="nav-link active" href="creationHero.php">Ajouter un héros</a></li>
+                <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationPouvoir.php">Ajouter un pouvoir</a></li>
+                <li class="nav-item"><a class="nav-link" href="../equipes/creationEquipe.php">Ajouter une équipe</a></li>
             </ul>
         </div>
     </div>

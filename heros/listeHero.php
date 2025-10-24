@@ -75,9 +75,9 @@ $heros = array_map(function($row) {
           <li class="nav-item"><a class="nav-link active" href="listeHero.php">Liste des héros</a></li>
           <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
           <li class="nav-item"><a class="nav-link" href="../equipes/listeEquipe.php">Liste des équipes</a></li>
-          <li class="nav-item"><a class="nav-link" href="creationhero.php">Ajouter un héros</a></li>
-          <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
-          <li class="nav-item"><a class="nav-link" href="../equipes/creationequipe.php">Ajouter une équipe</a></li>
+          <li class="nav-item"><a class="nav-link" href="creationHero.php">Ajouter un héros</a></li>
+          <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationPouvoir.php">Ajouter un pouvoir</a></li>
+          <li class="nav-item"><a class="nav-link" href="../equipes/creationEquipe.php">Ajouter une équipe</a></li>
         </ul>
     </div>
   </div>
@@ -121,7 +121,7 @@ $heros = array_map(function($row) {
     <!-- Boutons d'export à gauche et bouton Ajouter un héros à droite -->
     <div class="d-flex justify-content-between align-items-center mt-3">
       <div id="exportButtons"></div>
-      <a href="creationhero.php" class="btn btn-success">
+  <a href="creationHero.php" class="btn btn-success">
         <i class="bi bi-plus-circle"></i> Ajouter un héros
       </a>
     </div>
