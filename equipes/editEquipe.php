@@ -41,11 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="listeHero.php">Liste des héros</a></li>
-        <li class="nav-item"><a class="nav-link" href="listePouvoir.php">Liste des pouvoirs</a></li>
+        <li class="nav-item"><a class="nav-link" href="../heros/listeHero.php">Liste des héros</a></li>
+        <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
         <li class="nav-item"><a class="nav-link" href="listeEquipe.php">Liste des équipes</a></li>
-        <li class="nav-item"><a class="nav-link" href="creationhero.php">Ajouter un héros</a></li>
-        <li class="nav-item"><a class="nav-link" href="creationpouvoir.php">Ajouter un pouvoir</a></li>
+        <li class="nav-item"><a class="nav-link" href="../heros/creationhero.php">Ajouter un héros</a></li>
+        <li class="nav-item"><a class="nav-link" href="../pouvoirs/creationpouvoir.php">Ajouter un pouvoir</a></li>
         <li class="nav-item"><a class="nav-link" href="creationequipe.php">Ajouter une équipe</a></li>
       </ul>
     </div>
