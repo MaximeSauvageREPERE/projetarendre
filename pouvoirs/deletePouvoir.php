@@ -1,12 +1,11 @@
 <?php
-require_once 'db.php';
-
+require_once __DIR__ . '/../includes/db.php';
 $id = $_GET['id'] ?? null;
 if ($id) {
-    $stmt = $pdo->prepare('DELETE FROM heros WHERE id = ?');
+    $stmt = $pdo->prepare('DELETE FROM pouvoir WHERE id = ?');
     $stmt->execute([$id]);
 }
-header('Location: listeHero.php');
+header('Location: listePouvoir.php');
 exit;
 
 ?>

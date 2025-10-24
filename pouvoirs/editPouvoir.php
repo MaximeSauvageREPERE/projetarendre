@@ -1,26 +1,26 @@
 <?php
-require_once 'db.php';
+require_once __DIR__ . '/../includes/db.php';
 $id = $_GET['id'] ?? null;
-if (!$id) { header('Location: listeEquipe.php'); exit; }
-$stmt = $pdo->prepare('SELECT * FROM equipe WHERE id = ?');
+if (!$id) { header('Location: listePouvoir.php'); exit; }
+$stmt = $pdo->prepare('SELECT * FROM pouvoir WHERE id = ?');
 $stmt->execute([$id]);
-$equipe = $stmt->fetch();
-if (!$equipe) { header('Location: listeEquipe.php'); exit; }
+$pouvoir = $stmt->fetch();
+if (!$pouvoir) { header('Location: listePouvoir.php'); exit; }
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = trim($_POST['nom'] ?? '');
     if ($nom) {
-        $sql = 'UPDATE equipe SET nom=? WHERE id=?';
+        $sql = 'UPDATE pouvoir SET nom=? WHERE id=?';
         $stmt = $pdo->prepare($sql);
         try {
             $stmt->execute([$nom, $id]);
-            $message = '<div class="alert alert-success">Équipe modifiée avec succès !</div>';
-            $equipe['nom'] = $nom;
+            $message = '<div class="alert alert-success">Pouvoir modifié avec succès !</div>';
+            $pouvoir['nom'] = $nom;
         } catch (PDOException $e) {
             $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
         }
     } else {
-        $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
+        $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
     }
 }
 ?>
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier une équipe</title>
+    <title>Modifier un pouvoir</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -52,15 +52,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </nav>
 <div class="container mt-3">
-    <h1>Modifier une équipe</h1>
+    <h1>Modifier un pouvoir</h1>
     <?= $message ?>
     <form method="post" action="">
         <div class="mb-3">
-            <label for="nom" class="form-label">Nom de l'équipe</label>
-            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($equipe['nom']) ?>" required>
+            <label for="nom" class="form-label">Nom du pouvoir</label>
+            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($pouvoir['nom']) ?>" required>
         </div>
         <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <a href="listeEquipe.php" class="btn btn-secondary">Retour</a>
+        <a href="listePouvoir.php" class="btn btn-secondary">Retour</a>
     </form>
 </div>
 </body>
