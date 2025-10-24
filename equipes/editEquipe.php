@@ -1,27 +1,30 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Equipe.php';
 $id = $_GET['id'] ?? null;
 if (!$id) { header('Location: listeEquipe.php'); exit; }
 $stmt = $pdo->prepare('SELECT * FROM equipe WHERE id = ?');
 $stmt->execute([$id]);
-$equipe = $stmt->fetch();
-if (!$equipe) { header('Location: listeEquipe.php'); exit; }
+// Récupération de l'équipe sous forme d'objet
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$row) { header('Location: listeEquipe.php'); exit; }
+$equipe = Equipe::fromArray($row);
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['nom'] ?? '');
-    if ($nom) {
-        $sql = 'UPDATE equipe SET nom=? WHERE id=?';
-        $stmt = $pdo->prepare($sql);
-        try {
-            $stmt->execute([$nom, $id]);
-            $message = '<div class="alert alert-success">Équipe modifiée avec succès !</div>';
-            $equipe['nom'] = $nom;
-        } catch (PDOException $e) {
-            $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
-        }
-    } else {
-        $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
+  $nom = trim($_POST['nom'] ?? '');
+  if ($nom) {
+    $equipe->nom = $nom;
+    $sql = 'UPDATE equipe SET nom=? WHERE id=?';
+    $stmt = $pdo->prepare($sql);
+    try {
+      $stmt->execute([$equipe->nom, $equipe->id]);
+      $message = '<div class="alert alert-success">Équipe modifiée avec succès !</div>';
+    } catch (PDOException $e) {
+      $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
+  } else {
+    $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -84,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom de l'équipe</label>
-            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($equipe['nom']) ?>" required>
+            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($equipe->nom) ?>" required>
         </div>
         <div class="d-flex justify-content-end">
           <button type="submit" class="btn btn-primary">Enregistrer</button>

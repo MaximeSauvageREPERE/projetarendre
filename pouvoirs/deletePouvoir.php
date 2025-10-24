@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Pouvoir.php';
 $id = $_GET['id'] ?? null;
 if ($id) {
     $stmt = $pdo->prepare('DELETE FROM pouvoir WHERE id = ?');

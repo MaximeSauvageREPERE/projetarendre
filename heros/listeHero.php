@@ -1,5 +1,7 @@
 <?php
+
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Hero.php';
 
 // Récupérer tous les héros avec leur pouvoir et équipe
 $sql = 'SELECT h.id, h.nom, h.prenom, h.alias, p.nom AS pouvoir, e.nom AS equipe
@@ -8,7 +10,21 @@ $sql = 'SELECT h.id, h.nom, h.prenom, h.alias, p.nom AS pouvoir, e.nom AS equipe
         JOIN equipe e ON h.equipe_id = e.id
         ORDER BY h.nom, h.prenom';
 $stmt = $pdo->query($sql);
-$heros = $stmt->fetchAll();
+$heros = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    // On enrichit l'objet Hero avec les noms de pouvoir et d'équipe pour l'affichage
+    $hero = Hero::fromArray([
+        'id' => $row['id'],
+        'nom' => $row['nom'],
+        'prenom' => $row['prenom'],
+        'alias' => $row['alias'],
+        'pouvoir_id' => null,
+        'equipe_id' => null
+    ]);
+    $hero->pouvoir = $row['pouvoir'];
+    $hero->equipe = $row['equipe'];
+    $heros[] = $hero;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -84,14 +100,14 @@ $heros = $stmt->fetchAll();
         <tbody>
         <?php foreach ($heros as $hero): ?>
             <tr>
-                <td><?= htmlspecialchars($hero['nom']) ?></td>
-                <td><?= htmlspecialchars($hero['prenom']) ?></td>
-                <td><?= htmlspecialchars($hero['alias']) ?></td>
-                <td><?= htmlspecialchars($hero['pouvoir']) ?></td>
-                <td><?= htmlspecialchars($hero['equipe']) ?></td>
+                <td><?= htmlspecialchars($hero->nom) ?></td>
+                <td><?= htmlspecialchars($hero->prenom) ?></td>
+                <td><?= htmlspecialchars($hero->alias) ?></td>
+                <td><?= htmlspecialchars($hero->pouvoir) ?></td>
+                <td><?= htmlspecialchars($hero->equipe) ?></td>
                 <td>
-                    <a href="editHero.php?id=<?= $hero['id'] ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
-                    <a href="deleteHero.php?id=<?= $hero['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce héros ?');">Supprimer</a>
+                    <a href="editHero.php?id=<?= $hero->id ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
+                    <a href="deleteHero.php?id=<?= $hero->id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce héros ?');">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>

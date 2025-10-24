@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
-$pouvoirs = $pdo->query('SELECT * FROM pouvoir ORDER BY nom')->fetchAll();
+require_once __DIR__ . '/../models/Pouvoir.php';
+$stmt = $pdo->query('SELECT * FROM pouvoir ORDER BY nom');
+$pouvoirs = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $pouvoirs[] = Pouvoir::fromArray($row);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -72,10 +77,10 @@ $pouvoirs = $pdo->query('SELECT * FROM pouvoir ORDER BY nom')->fetchAll();
         <tbody>
         <?php foreach ($pouvoirs as $pouvoir): ?>
             <tr>
-                <td><?= htmlspecialchars($pouvoir['nom']) ?></td>
+                <td><?= htmlspecialchars($pouvoir->nom) ?></td>
                 <td>
-                    <a href="editPouvoir.php?id=<?= $pouvoir['id'] ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
-                    <a href="deletePouvoir.php?id=<?= $pouvoir['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pouvoir ?');">Supprimer</a>
+                    <a href="editPouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
+                    <a href="deletePouvoir.php?id=<?= $pouvoir->id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce pouvoir ?');">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . '/../includes/db.php';
 
-// Traitement du formulaire
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Hero.php';
+
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'] ?? '';
@@ -11,10 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $equipe_id = $_POST['equipe_id'] ?? '';
 
     if ($nom && $prenom && $alias && $pouvoir_id && $equipe_id) {
+        $hero = new Hero($nom, $prenom, $alias, $pouvoir_id, $equipe_id);
         $sql = 'INSERT INTO heros (nom, prenom, alias, pouvoir_id, equipe_id) VALUES (?, ?, ?, ?, ?)';
         $stmt = $pdo->prepare($sql);
         try {
-            $stmt->execute([$nom, $prenom, $alias, $pouvoir_id, $equipe_id]);
+            $stmt->execute([$hero->nom, $hero->prenom, $hero->alias, $hero->pouvoir_id, $hero->equipe_id]);
             $message = '<div class="alert alert-success">Héros créé avec succès !</div>';
         } catch (PDOException $e) {
             $message = '<div class="alert alert-danger">Erreur lors de la création : ' . htmlspecialchars($e->getMessage()) . '</div>';

@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
-$equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
+require_once __DIR__ . '/../models/Equipe.php';
+$stmt = $pdo->query('SELECT * FROM equipe ORDER BY nom');
+$equipes = [];
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    $equipes[] = Equipe::fromArray($row);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -72,10 +77,10 @@ $equipes = $pdo->query('SELECT * FROM equipe ORDER BY nom')->fetchAll();
         <tbody>
         <?php foreach ($equipes as $equipe): ?>
             <tr>
-                <td><?= htmlspecialchars($equipe['nom']) ?></td>
+                <td><?= htmlspecialchars($equipe->nom) ?></td>
                 <td>
-                    <a href="editEquipe.php?id=<?= $equipe['id'] ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
-                    <a href="deleteEquipe.php?id=<?= $equipe['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette équipe ?');">Supprimer</a>
+                    <a href="editEquipe.php?id=<?= $equipe->id ?>" class="btn btn-warning btn-sm me-2">Modifier</a>
+                    <a href="deleteEquipe.php?id=<?= $equipe->id ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette équipe ?');">Supprimer</a>
                 </td>
             </tr>
         <?php endforeach; ?>

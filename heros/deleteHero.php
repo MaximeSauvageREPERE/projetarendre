@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Hero.php';
 
 $id = $_GET['id'] ?? null;
 if ($id) {

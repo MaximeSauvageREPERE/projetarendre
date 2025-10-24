@@ -1,27 +1,29 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Pouvoir.php';
 $id = $_GET['id'] ?? null;
 if (!$id) { header('Location: listePouvoir.php'); exit; }
 $stmt = $pdo->prepare('SELECT * FROM pouvoir WHERE id = ?');
 $stmt->execute([$id]);
-$pouvoir = $stmt->fetch();
-if (!$pouvoir) { header('Location: listePouvoir.php'); exit; }
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$row) { header('Location: listePouvoir.php'); exit; }
+$pouvoir = Pouvoir::fromArray($row);
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['nom'] ?? '');
-    if ($nom) {
-        $sql = 'UPDATE pouvoir SET nom=? WHERE id=?';
-        $stmt = $pdo->prepare($sql);
-        try {
-            $stmt->execute([$nom, $id]);
-            $message = '<div class="alert alert-success">Pouvoir modifié avec succès !</div>';
-            $pouvoir['nom'] = $nom;
-        } catch (PDOException $e) {
-            $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
-        }
-    } else {
-        $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
+  $nom = trim($_POST['nom'] ?? '');
+  if ($nom) {
+    $pouvoir->nom = $nom;
+    $sql = 'UPDATE pouvoir SET nom=? WHERE id=?';
+    $stmt = $pdo->prepare($sql);
+    try {
+      $stmt->execute([$pouvoir->nom, $pouvoir->id]);
+      $message = '<div class="alert alert-success">Pouvoir modifié avec succès !</div>';
+    } catch (PDOException $e) {
+      $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
+  } else {
+    $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -84,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post" action="">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom du pouvoir</label>
-            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($pouvoir['nom']) ?>" required>
+            <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($pouvoir->nom) ?>" required>
         </div>
         <div class="d-flex justify-content-end">
           <button type="submit" class="btn btn-primary">Enregistrer</button>

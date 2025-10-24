@@ -1,25 +1,26 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Pouvoir.php';
 
 $message = '';
+// ...existing code...
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['nom'] ?? '');
-    if ($nom) {
-        $sql = 'INSERT INTO pouvoir (nom) VALUES (?)';
-        $stmt = $pdo->prepare($sql);
-        try {
-            $stmt->execute([$nom]);
-            $message = '<div class="alert alert-success">Pouvoir ajouté avec succès !</div>';
-        } catch (PDOException $e) {
-            $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
-        }
-    } else {
-        $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
+  $nom = trim($_POST['nom'] ?? '');
+  if ($nom) {
+    $pouvoir = new Pouvoir($nom);
+    $sql = 'INSERT INTO pouvoir (nom) VALUES (?)';
+    $stmt = $pdo->prepare($sql);
+    try {
+      $stmt->execute([$pouvoir->nom]);
+      $message = '<div class="alert alert-success">Pouvoir ajouté avec succès !</div>';
+    } catch (PDOException $e) {
+      $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
+  } else {
+    $message = '<div class="alert alert-warning">Veuillez saisir un nom de pouvoir.</div>';
+  }
 }
 ?>
-<!DOCTYPE html>
-<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

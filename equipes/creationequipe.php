@@ -1,21 +1,24 @@
 <?php
+
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Equipe.php';
 
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nom = trim($_POST['nom'] ?? '');
-    if ($nom) {
-        $sql = 'INSERT INTO equipe (nom) VALUES (?)';
-        $stmt = $pdo->prepare($sql);
-        try {
-            $stmt->execute([$nom]);
-            $message = '<div class="alert alert-success">Équipe ajoutée avec succès !</div>';
-        } catch (PDOException $e) {
-            $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
-        }
-    } else {
-        $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
+  $nom = trim($_POST['nom'] ?? '');
+  if ($nom) {
+    $equipe = new Equipe($nom);
+    $sql = 'INSERT INTO equipe (nom) VALUES (?)';
+    $stmt = $pdo->prepare($sql);
+    try {
+      $stmt->execute([$equipe->nom]);
+      $message = '<div class="alert alert-success">Équipe ajoutée avec succès !</div>';
+    } catch (PDOException $e) {
+      $message = '<div class="alert alert-danger">Erreur : ' . htmlspecialchars($e->getMessage()) . '</div>';
     }
+  } else {
+    $message = '<div class="alert alert-warning">Veuillez saisir un nom d\'équipe.</div>';
+  }
 }
 ?>
 <!DOCTYPE html>

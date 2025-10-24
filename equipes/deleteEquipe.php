@@ -1,7 +1,9 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../models/Equipe.php';
 $id = $_GET['id'] ?? null;
 if ($id) {
+    // On pourrait instancier un objet Equipe ici si besoin d'une logique métier
     $stmt = $pdo->prepare('DELETE FROM equipe WHERE id = ?');
     $stmt->execute([$id]);
 }
