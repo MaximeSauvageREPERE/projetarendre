@@ -103,6 +103,12 @@ $heros = array_map(function($row) {
         </tbody>
       </table>
     </div>
+    <!-- Bouton pour ajouter un héros -->
+    <div class="d-flex justify-content-end mt-3">
+      <a href="creationhero.php" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Ajouter un héros
+      </a>
+    </div>
   </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

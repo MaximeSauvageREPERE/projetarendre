@@ -130,8 +130,11 @@ $equipes = $stmt->fetchAll();
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">Créer le héros</button>
+        <div class="d-flex justify-content-end mt-3">
+          <button type="submit" class="btn btn-success">Créer</button>
+          <a href="listeHero.php" class="btn btn-secondary ms-2">
+            <i class="bi bi-arrow-left"></i> Retour
+          </a>
         </div>
     </form>
   </div>
