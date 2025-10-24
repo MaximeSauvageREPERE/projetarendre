@@ -45,6 +45,7 @@ $heros = $stmt->fetchAll();
                 <th>Alias</th>
                 <th>Pouvoir</th>
                 <th>Équipe</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -55,6 +56,10 @@ $heros = $stmt->fetchAll();
                 <td><?= htmlspecialchars($hero['alias']) ?></td>
                 <td><?= htmlspecialchars($hero['pouvoir']) ?></td>
                 <td><?= htmlspecialchars($hero['equipe']) ?></td>
+                <td>
+                    <a href="editHero.php?id=<?= $hero['id'] ?>" class="btn btn-warning btn-sm">Modifier</a>
+                    <a href="deleteHero.php?id=<?= $hero['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce héros ?');">Supprimer</a>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
