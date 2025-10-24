@@ -59,7 +59,7 @@ $equipes = array_map(function($row) {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-  <ul class="navbar-nav mx-auto">
+      <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link" href="../heros/listeHero.php">Liste des héros</a></li>
         <li class="nav-item"><a class="nav-link" href="../pouvoirs/listePouvoir.php">Liste des pouvoirs</a></li>
         <li class="nav-item"><a class="nav-link active" href="listeEquipe.php">Liste des équipes</a></li>
