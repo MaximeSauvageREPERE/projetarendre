@@ -19,12 +19,12 @@ $pouvoirs = $pdo->query('SELECT * FROM pouvoir ORDER BY nom')->fetchAll();
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="creationhero.php">Créer un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="listeHero.php">Liste des héros</a></li>
+        <li class="nav-item"><a class="nav-link" href="listePouvoir.php">Liste des pouvoirs</a></li>
+        <li class="nav-item"><a class="nav-link" href="listeEquipe.php">Liste des équipes</a></li>
+        <li class="nav-item"><a class="nav-link" href="creationhero.php">Ajouter un héros</a></li>
         <li class="nav-item"><a class="nav-link" href="creationpouvoir.php">Ajouter un pouvoir</a></li>
         <li class="nav-item"><a class="nav-link" href="creationequipe.php">Ajouter une équipe</a></li>
-        <li class="nav-item"><a class="nav-link" href="listeEquipe.php">Liste des équipes</a></li>
-        <li class="nav-item"><a class="nav-link" href="listePouvoir.php">Liste des pouvoirs</a></li>
       </ul>
     </div>
   </div>
